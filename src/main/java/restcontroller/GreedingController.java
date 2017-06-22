@@ -75,7 +75,7 @@ public class GreedingController {
             getText();
 
             closeBrowser();
-            return output;
+            return getText();
         } catch (Exception e) {
             e.getMessage();
             return e.getMessage();
