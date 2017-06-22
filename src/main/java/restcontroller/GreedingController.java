@@ -74,11 +74,11 @@ public class GreedingController {
             login("admin", "12345");
             getText();
 
-            closeBrowser();
+           // closeBrowser();
             return getText();
         } catch (Exception e) {
             e.getMessage();
-            return e.getMessage();
+            return "loi : "+e.getMessage();
         }
 
     }
