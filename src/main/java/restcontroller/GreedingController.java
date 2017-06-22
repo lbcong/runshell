@@ -6,12 +6,18 @@
 package restcontroller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,15 +43,36 @@ public class GreedingController {
             e.getMessage();
             return e.getMessage();
         }
-        
+
+    }
+
+    @RequestMapping(value = "/openbrowser", method = RequestMethod.GET)
+    public String selenium() {
+        String output = "";
+        try {
+            System.setProperty("webdriver.chrome.driver",
+                    "/temp/chromedriver");
+            
+
+            WebDriver webDriver = new ChromeDriver();
+            webDriver.get("https://www.youtube.com/watch?v=H-gTDZpXLdo");
+            //webDriver.navigate().to("https://www.youtube.com/watch?v=H-gTDZpXLdo");
+            
+             String html = webDriver.getPageSource();
+
+            //driver.close();
+            return output;
+        } catch (Exception e) {
+            e.getMessage();
+            return e.getMessage();
+        }
+
     }
 
     public String executeCommand(String command) {
 
         StringBuffer output = new StringBuffer();
-        
-        
-        
+
         Process p;
         try {
             p = Runtime.getRuntime().exec(command);
