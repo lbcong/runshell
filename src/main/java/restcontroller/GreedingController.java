@@ -51,7 +51,7 @@ public class GreedingController {
         String output = "";
         try {
             System.setProperty("webdriver.chrome.driver",
-                    "/temp/chromedriver");
+                    "/app/chromedriver");
             
 
             WebDriver webDriver = new ChromeDriver();
