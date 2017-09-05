@@ -61,14 +61,7 @@ public class GreedingController {
     public String selenium() {
         String output = "";
         try {
-//            System.setProperty("webdriver.chrome.driver",
-//                    "/app/chromedriver");
 
-            //System.setProperty("webdriver.gecko.drive",
-            //       "C:\\Users\\Hello\\Downloads\\Compressed\\geckodriver-v0.16.0-win64\\geckodriver.exe");
-            //File pathToBinary = new File("E:\\Soft\\FirefoxPortable\\App\\Firefox64\\firefox.exe");
-            //FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
-            //FirefoxProfile firefoxProfile = new FirefoxProfile();
             webDriver = new HtmlUnitDriver();
             openTestSite();
             login("admin", "12345");
