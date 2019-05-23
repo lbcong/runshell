@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,7 +46,7 @@ public class GreedingController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String greeding() {
 
-        return "Hello ";
+        return "Hello";
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -175,7 +176,9 @@ public class GreedingController {
 
     public void startProxy(ProxyWithSSH proxyWithSSH) {
         try {
-            proxyWithSSH.setting(System.getProperty("user.dir") + File.separator + "ssh.txt", 1080);
+            URL sqlScriptUrl = GreedingController.class
+                .getClassLoader().getResource("ssh.txt");
+            proxyWithSSH.setting(sqlScriptUrl.getPath(), 1080);
             proxyWithSSH.start();
         } catch (Exception e) {
             e.getMessage();
