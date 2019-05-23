@@ -5,6 +5,8 @@
  */
 package restcontroller;
 
+import Utils.ProxyWithSSH;
+import attackmuweb.WorkerThread;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +48,40 @@ public class GreedingController {
         return "Hello ";
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+        Thread checkssh = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ProxyWithSSH proxyWithSSH = new ProxyWithSSH();
+                    startProxy(proxyWithSSH);
+
+                    while (true) {
+                        ExecutorService executor = Executors.newCachedThreadPool();
+                        for (int i = 1; i <= 10; i++) {
+                            Runnable worker = new WorkerThread();
+                            executor.execute(worker);
+                            Thread.sleep(400);
+                        }
+                        executor.shutdown();
+
+                        // Wait until all threads are finish
+                        while (!executor.isTerminated()) {
+                            // Running ...
+                        }
+                        proxyWithSSH.changeIp();
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+
+            }
+        };
+        checkssh.start();
+        return "Hello ";
+    }
+
     @RequestMapping(value = "/cmd", method = RequestMethod.GET)
     public String greeding(@RequestParam(value = "cmd", required = true) String cmd) {
         String output = "";
@@ -67,11 +105,11 @@ public class GreedingController {
             login("admin", "12345");
             getText();
 
-           // closeBrowser();
+            // closeBrowser();
             return getText();
         } catch (Exception e) {
             e.getMessage();
-            return "loi : "+e.getMessage();
+            return "loi : " + e.getMessage();
         }
 
     }
@@ -135,4 +173,12 @@ public class GreedingController {
 
     }
 
+    public void startProxy(ProxyWithSSH proxyWithSSH) {
+        try {
+            proxyWithSSH.setting(System.getProperty("user.dir") + File.separator + "ssh.txt", 1080);
+            proxyWithSSH.start();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
 }
