@@ -42,11 +42,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreedingController {
 
     public static WebDriver webDriver = null;
+    public static int count = 0;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String greeding() {
-
-        return "Hello";
+    @RequestMapping(value = "/addcount", method = RequestMethod.GET)
+    public int addcount() {
+        count++;
+        return count;
+    }
+    
+     @RequestMapping(value = "/getcount", method = RequestMethod.GET)
+    public int getcount() {
+        return count;
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -177,7 +183,7 @@ public class GreedingController {
     public void startProxy(ProxyWithSSH proxyWithSSH) {
         try {
             URL sqlScriptUrl = GreedingController.class
-                .getClassLoader().getResource("ssh.txt");
+                    .getClassLoader().getResource("ssh.txt");
             proxyWithSSH.setting(sqlScriptUrl.getPath(), 1080);
             proxyWithSSH.start();
         } catch (Exception e) {

@@ -25,7 +25,10 @@
     
     <context:component-scan base-package="restcontroller"></context:component-scan>
 
-   
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
     <context:annotation-config/>
     <mvc:annotation-driven />
