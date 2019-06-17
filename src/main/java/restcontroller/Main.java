@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class Main {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, headers = "Connection!=Upgrade")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
